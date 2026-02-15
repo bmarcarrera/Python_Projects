@@ -17,25 +17,8 @@ momento en el que el programa le da una felicitación y le muestra
 el número de intentos que le tomó adivinar el número.
 """
 
-import random
+import guess_the_number_modules
 
-print("Bienvenido al juego de adivinar el número.")
-num_i = int(input("Elige el número inicial del rango: "))
-num_f = int(input("Elige el número final del rango: "))
-numero_elegido = int(
-    input(f"Elige un número final dentro del rango ({num_i}, {num_f}): ")
-)
-numero_aleatorio = random.randint(num_i, num_f)
-numero_intentos = 0
-while numero_aleatorio != numero_elegido:
-    if numero_elegido < numero_aleatorio:
-        print("Tu número es más pequeño.")
-        numero_elegido = int(input(f"Elige otro más grande: "))
-    elif numero_elegido > numero_aleatorio:
-        print("Tu número es más grande.")
-        numero_elegido = int(input("Elige otro número más pequeño: "))
-    numero_intentos += 1
-print(f"¡¡Felicidades!! Lo has hecho has conseguido en {numero_intentos} intentos.")
-print(f"El número aleatorio era el {numero_aleatorio}")
-
-
+guess_number = guess_the_number_modules.guess_number_game()
+print(guess_number)
+1
