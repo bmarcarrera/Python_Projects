@@ -3,14 +3,15 @@ import random
 
 def verify_number(message):
     while True:
+        user_input = input(message)
         try:
-            number = int(input(message))
-            if number > 0:
+            number = int(user_input)
+            if number >= 0:
                 return number
             else:
-                print(f"{number} is less than 0. Introduce positive number.")
-        except ValueError as ve:
-            print(f"{ve}: The value {number} is not correct. Try again.")
+                print(f"{number} is less than 0. Introduce a natural number.")
+        except ValueError:
+            print(f'The value "{user_input}" is not correct. Try again.')
 
 
 def number_comparison(secret_number, user_number):
@@ -21,21 +22,33 @@ def number_comparison(secret_number, user_number):
 
 
 def guess_number_game(number_of_tries=1):
-    i_range = verify_number("Introduce the minimum number of the range: ")
-    f_range = verify_number("Introduce the maximum number of the range: ")
+    print("Welcome to the Guess The Number game!")
+    i_range = verify_number("Plase, introduce the minimum number of the range: ")
+    f_range = verify_number(
+        f"Now, introduce the maximum number of the range. Must be 2 unit superior to {i_range}: "
+    )
+
+    while not f_range > i_range + 1:
+        print(
+            "The final limit can't be less or equal and can't be less in 1 unit than the initial limit."
+        )
+        f_range = verify_number("Introduce a valid value: ")
+
     random_number = random.randint(i_range, f_range)
+
     while True:
         choosen_number = verify_number(
             f"Guess the number between {i_range} and {f_range}: "
         )
         if choosen_number < i_range or choosen_number > f_range:
             print(
-                f"El valor {choosen_number} no está dentro del rango permitido. Inténtalo de nuevo."
+                f"The value {choosen_number} is not in the permitted range. Try again."
             )
-            continue
         elif choosen_number != random_number:
             print(f"{number_comparison(random_number, choosen_number)}")
         else:
             return f"Congrats! You've made in {number_of_tries}. The random number is {random_number}."
 
         number_of_tries += 1
+
+    

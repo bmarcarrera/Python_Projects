@@ -17,8 +17,7 @@ momento en el que el programa le da una felicitación y le muestra
 el número de intentos que le tomó adivinar el número.
 """
 
-import guess_the_number_modules
+import guess_the_number_module
 
-guess_number = guess_the_number_modules.guess_number_game()
+guess_number = guess_the_number_module.guess_number_game()
 print(guess_number)
-1
