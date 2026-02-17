@@ -2,6 +2,7 @@ import random
 
 
 def verify_number(message):
+    """Verifies that the input is a valid number."""
     while True:
         user_input = input(message)
         try:
@@ -9,46 +10,61 @@ def verify_number(message):
             if number >= 0:
                 return number
             else:
-                print(f"{number} is less than 0. Introduce a natural number.")
+                print(
+                    f"{number} is less than 0. Please, enter a natural number."
+                )
         except ValueError:
             print(f'The value "{user_input}" is not correct. Try again.')
 
 
+def is_valid_range(initial_range, final_range):
+    """Verifies the correct format of the range established."""
+    return final_range > (initial_range + 1)
+
+
 def number_comparison(secret_number, user_number):
-    if secret_number < user_number:
-        return "You number is too high, choose a lower one."
+    """Compares the random and user numbers to check the result."""
+    if (secret_number + 10) < user_number:
+        return "too high"
+    elif secret_number < user_number:
+        return "high"
+    elif secret_number > (user_number + 10):
+        return "too low"
     elif secret_number > user_number:
-        return "You number is too low, choose a higher one."
+        return "low"
+    else:
+        return "correct"
 
 
-def guess_number_game(number_of_tries=1):
+def guess_number_game():
+    """Main function that contains the messages and loops to keep the game
+    running correctly e efficiently."""
     print("Welcome to the Guess The Number game!")
-    i_range = verify_number("Plase, introduce the minimum number of the range: ")
-    f_range = verify_number(
-        f"Now, introduce the maximum number of the range. Must be 2 unit superior to {i_range}: "
+    i_num = verify_number(
+        "Please, introduce the minimum number of the range: "
+    )
+    f_num = verify_number(
+        f"Now, enter the maximum number of the range. It must be 2 unit higher than {i_num}: "
     )
 
-    while not f_range > i_range + 1:
-        print(
-            "The final limit can't be less or equal and can't be less in 1 unit than the initial limit."
+    while not is_valid_range(i_num, f_num):
+        f_num = verify_number(
+            f"The maximum limit must be at least 2 units higher than {i_num}: "
         )
-        f_range = verify_number("Introduce a valid value: ")
 
-    random_number = random.randint(i_range, f_range)
+    random_number = random.randint(i_num, f_num)
 
+    number_of_tries = 1
     while True:
-        choosen_number = verify_number(
-            f"Guess the number between {i_range} and {f_range}: "
+        chosen_number = verify_number(
+            f"Guess the number between {i_num} and {f_num}: "
         )
-        if choosen_number < i_range or choosen_number > f_range:
-            print(
-                f"The value {choosen_number} is not in the permitted range. Try again."
-            )
-        elif choosen_number != random_number:
-            print(f"{number_comparison(random_number, choosen_number)}")
+        result = number_comparison(random_number, chosen_number)
+        if chosen_number not in range(i_num, f_num + 1):
+            print(f"The {chosen_number} is not inside the range. Try again.")
+        elif result in ["high", "low", "too hight", "too low"]:
+            print(f"Your guess is {result}. Try again.")
         else:
-            return f"Congrats! You've made in {number_of_tries}. The random number is {random_number}."
+            return f"Congrats! You are correct! You made it in {number_of_tries} tries. The random number was {random_number}."
 
         number_of_tries += 1
-
-    
