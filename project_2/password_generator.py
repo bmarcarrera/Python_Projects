@@ -10,3 +10,7 @@ así como elegir qué caracteres incluir, como letras mayúsculas y minúsculas,
 # Una vez que se han establecido las preferencias del usuario,
 el programa genera una contraseña aleatoria que cumple con los criterios especificados.
 """
+
+from password_generator_module import contraseña_usuario
+
+print(contraseña_usuario())
