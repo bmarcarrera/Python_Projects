@@ -2,35 +2,38 @@ import random
 import string
 
 
+def condiciones_contraseña(mensaje_usuario):
+    minusculas = string.ascii_lowercase not in mensaje_usuario
+    mayusculas = string.ascii_uppercase not in mensaje_usuario
+    numeros = string.digits not in mensaje_usuario
+    simbolos = string.punctuation not in mensaje_usuario
+    espacios = string.whitespace not in mensaje_usuario
+
+    condiciones = {
+        minusculas: "La contraseña ha de tener al menos una minúscula.",
+        mayusculas: "La contraseña ha de tener al menos una mayúscula.",
+        numeros: "La contraseña ha de tener al menos un número.",
+        simbolos: "La contraseña ha de tener al menos un caracter especial.",
+        espacios: "La contraseña no puede tener espacios.",
+    }
+    return condiciones
+
+
 def password_parameters(mensaje):
+    input_usuario = input(mensaje)
+    condiciones = condiciones_contraseña(input_usuario)
+    while len(input_usuario) < 8:
+        print("Introduce mínimo 8 caracteres.")
+        input_usuario = input(mensaje)
 
     while True:
-            input_usuario = input(mensaje)
-            if len(input_usuario) < 8:
-                print("mínimo 8 caracteres.")
-                continue
-            if len(input_usuario) >= 8:
-                for caracter in input_usuario:
-                    for espacios in string.whitespace:
-                    print(
-                        "La contraseña no puede contener espacios o saltos de línea."
-                    )
-                elif string.ascii_lowercase not in input_usuario:
-                    print("La contraseña ha de tener al menos una minúscula.")
-                elif string.ascii_uppercase not in input_usuario:
-                    print("La contraseña ha de tener al menos una mayúscula.")
-                elif string.digits not in input_usuario:
-                    print("La contraseña ha de tener al menos un número.")
-                elif string.punctuation not in input_usuario:
-                    print(
-                        "La contraseña ha de tener al menos un caracter especial."
-                    )
-            else:
-                print("Los caracteres introducidos son correctos.")
-                break
-            print(
-                "El valor introducido no corresponde al tipo de valor necesario."
-            )
+        if not (all(condiciones)):
+            print("Caracteres introducidos correctamente")
+            break
+        for condicion in condiciones:
+            if condicion:
+                print(condiciones[condicion])
+        input_usuario = input("Introduce de nuevo caracteres válidos: ")
 
 
 def contraseña_usuario():
